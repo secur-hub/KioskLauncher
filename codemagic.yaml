@@ -1,0 +1,29 @@
+workflows:
+  kiosklauncher-release:
+    name: Build KioskLauncher APK
+    max_build_duration: 30
+    instance_type: linux
+
+    environment:
+      vars:
+        GRADLEW: "./gradlew"
+      java: 17
+
+    scripts:
+      - name: Clean and prepare
+        script: |
+          chmod +x gradlew
+          ./gradlew clean
+
+      - name: Build Release APK
+        script: |
+          ./gradlew assembleRelease
+
+    artifacts:
+      - app/build/outputs/apk/release/app-release.apk
+
+    publishing:
+      email:
+        recipients:
+          - "tuo@email.com"
+
